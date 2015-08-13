@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="items">
+        <item >普通通知栏</item>
+        <item >InboxStyle通知栏</item>
+        <item >BigPictureStyle通知栏</item>
+        <item >BigTextStyle通知栏</item>
+        <item >跳转</item>
+        <item >长驻型通知</item>
+        <item >安装APK</item>
+        <item >带进度条通知栏－确定进度</item>
+        <item >带进度条通知栏－不确定进度</item>
+        <item >带进度条通知栏－自定义</item>
+
+        <item >自定义视图</item>
+        <item >自定义按钮</item>
+    </string-array>
+</resources>
