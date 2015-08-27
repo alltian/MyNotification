@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">MyNotification</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">clear  all</string>
     <string name="hello_world">Hello world!</string>
 
 </resources>

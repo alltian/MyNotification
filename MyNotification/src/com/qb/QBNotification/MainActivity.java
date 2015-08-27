@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.qb.Utils.QBNotificationManager;
@@ -32,9 +33,17 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        return false;
+
+        return true;
     }
-    private int index = 10;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        QBNotificationManager.clearAllNotifification(this);
+        return super.onOptionsItemSelected(item);
+    }
+
+    private int index = 0;
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -42,33 +51,39 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         switch (position) {
             case 0:
                 QBNotificationManager.showOrdinaryNotification(this,
-                        "标题", "内容", "显示通知", R.drawable.ic_launcher, 12);
+                        "标题", "内容", "显示通知", R.drawable.ic_launcher, 1);
                 break;
             case 1:
 
+                int num= 7;
+                String [] lins =new String[num];
+                for (int i=0 ;i<num;i++)
+                {
+                    lins[i]="第"+i+"行数据";
+                }
                 QBNotificationManager.showInboxStyleNotification(this,
-                        "InboxStyle标题", "内容", "InboxStyle显示通知", "段落视图", "小标题",
-                        resultIntent, R.drawable.ic_launcher, 12);
+                        "InboxStyle标题", "内容", "InboxStyle显示通知", "段落视图", "小标题",lins,
+                        resultIntent, R.drawable.ic_launcher, 2);
                 break;
             case 2:
                 QBNotificationManager.showBigPictureStyleNotification(this,
                         "BigPictureStyle标题", "内容", "BigPictureStyle显示通知", "图标",
                         BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher),
-                        resultIntent, R.drawable.ic_launcher, 12);
+                        resultIntent, R.drawable.ic_launcher, 3);
                 break;
             case 3:
                 QBNotificationManager.showBigTextStyleNotification(this,
                         "BigTextStyle标题", "内容", "BigTextStyle显示通知", "文字",
                         "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                        resultIntent, R.drawable.ic_launcher, 12);
+                        resultIntent, R.drawable.ic_launcher, 4);
                 break;
             case 4:
                 QBNotificationManager.showIntentNotification(this,
-                        "标题", "内容", "跳转通知", resultIntent, R.drawable.ic_launcher, 12);
+                        "标题", "内容", "跳转通知", resultIntent, R.drawable.ic_launcher, 5);
                 break;
             case 5:
                 QBNotificationManager.showLongTimeNotification(this,
-                        "常驻型标题", "内容。。。。", "常驻通知", resultIntent, R.drawable.ic_launcher, 12);
+                        "常驻型标题", "内容。。。。", "常驻通知", resultIntent, R.drawable.ic_launcher, 6);
                 break;
             case 6:
                 Intent apkIntent = new Intent();
@@ -79,33 +94,33 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 Uri uri = Uri.fromFile(new File("file:///android_asset/cs.apk"));
                 apkIntent.setDataAndType(uri, "application/vnd.android.package-archive");
                 QBNotificationManager.showIntentNotification(this,
-                        "标题", "内容", "APK 安装通知", resultIntent, R.drawable.ic_launcher, 12);
+                        "标题", "内容", "APK 安装通知", resultIntent, R.drawable.ic_launcher, 7);
                 break;
 
             case  7:
                 QBNotificationManager.showProgressNotification(this,
-                        "标题", "内容。。。。", "通知", resultIntent, true, 0, R.drawable.ic_launcher, 12);
+                        "标题", "内容。。。。", "通知", resultIntent, true, 0, R.drawable.ic_launcher, 8);
                 break;
             case  8:
 
                 QBNotificationManager.showProgressNotification(this,
-                        "标题", "内容。。。。", "通知", resultIntent, false, 20+index, R.drawable.ic_launcher, 32);
+                        "标题", "内容。。。。", "通知", resultIntent, false, 10+index, R.drawable.ic_launcher, 32);
                 index+=10;
                 break;
             case  9:
                 QBNotificationManager.showDefineProgressNotification(this,
-                        "自定义标题", "内容。。。。", "自定义通知", resultIntent, 0, R.drawable.ic_launcher, 12);
+                        "自定义标题", "内容。。。。", "自定义通知", resultIntent, 0, R.drawable.ic_launcher, 9);
                 downloadThread = new DownloadThread();
                 downloadThread.start();
 
                 break;
             case 10:
                 QBNotificationManager.showDefineView(this,
-                        "自定义标题", "内容。。。。", "自定义通知", resultIntent, R.drawable.ic_launcher, 12);
+                        "自定义标题", "内容。。。。", "自定义通知", resultIntent, R.drawable.ic_launcher, 10);
                 break;
             case 11:
                 QBNotificationManager.showDefineButtonView(this,
-                        "自定义标题", "内容。。。。", "自定义通知", resultIntent, R.drawable.ic_launcher, 12);
+                        "自定义标题", "内容。。。。", "自定义通知", resultIntent, R.drawable.ic_launcher, 11);
                 break;
 
         }
@@ -126,7 +141,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 }
                 now_progress += 10;
                 QBNotificationManager.showDefineProgressNotification(MainActivity.this,
-                        "自定义型标题", "内容。。。。", "自定义通知", resultIntent, now_progress, R.drawable.ic_launcher, 12);
+                        "自定义型标题", "内容。。。。", "自定义通知", resultIntent, now_progress, R.drawable.ic_launcher, 32);
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
