@@ -101,26 +101,28 @@ public class QBNotificationManager {
         return pendingIntent;
     }
 
+
     /**
      * 段落样式的大视图通知栏
      * 细节区域只有256dp高度的内容
      * 需要最高的优先级 ，否则二级滑动滑不动
      *
      * @param context
-     * @param title
-     * @param text
-     * @param ticker
-     * @param bigContentTitle
-     * @param summaryText
-     * @param channel
+     * @param title 未展开时的 标题；
+     * @param text 未展开时的 内容
+     * @param ticker 通知来到时，状态栏的提示
+     * @param bigContentTitle 展开时的标题
+     * @param summaryText 展开时的小标题
+     * @param lins 展开时的每行内容（）
+     * @param resultIntent intent
+     * @param channel 通知的ID
      */
     public static void showInboxStyleNotification(Context context, String title, String text, String ticker,
                                                   String bigContentTitle, String summaryText, String[] lins,
-                                                  Intent resultIntent, int icon, int channel) {
+                                                  Intent resultIntent, int channel) {
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-
         inboxStyle.setBigContentTitle(bigContentTitle);
-        inboxStyle.setSummaryText(summaryText);
+        inboxStyle.setSummaryText(getSubStringTitle(summaryText));
         int lineLength = lins.length;
         for (int i = 0; i < lineLength; i++) {
             inboxStyle.addLine(lins[i]);
@@ -131,14 +133,14 @@ public class QBNotificationManager {
         mBuilder
                 .setContentTitle(title)
                 .setContentText(text)
-                .setPriority(Notification.PRIORITY_MAX)
+                .setPriority(Notification.PRIORITY_MAX)// 优先级  最高
                 .setTicker(ticker)
-                .setSmallIcon(SmallIcon)
+                .setSmallIcon(getPushIconId(context))
                 .setStyle(inboxStyle)
                 .setContentIntent(pendingIntent)
         ;
         Notification mNotification = mBuilder.build();
-        mNotification.icon = icon;
+        mNotification.icon = getPushIconId(context);//默认的显示图标
         mManager.notify(dealWithId(channel), mNotification);
     }
 
@@ -160,6 +162,7 @@ public class QBNotificationManager {
         NotificationCompat.BigPictureStyle inboxStyle = new NotificationCompat.BigPictureStyle();
         inboxStyle.setBigContentTitle(bigContentTitle);
         inboxStyle.bigPicture(bitmap);
+        inboxStyle.setSummaryText("阿达");
         mBuilder = getBuilder(context);
         mManager = getManager(context);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, RequestCode, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -190,10 +193,11 @@ public class QBNotificationManager {
      * @param channel
      */
     public static void showBigTextStyleNotification(Context context, String title, String text, String ticker,
-                                                    String bigContentTitle, String bigtext, Intent resultIntent,
+                                                    String bigContentTitle,String summary ,String bigtext, Intent resultIntent,
                                                     int icon, int channel) {
         NotificationCompat.BigTextStyle inboxStyle = new NotificationCompat.BigTextStyle();
         inboxStyle.setBigContentTitle(bigContentTitle);
+        inboxStyle.setSummaryText(summary);
         inboxStyle.bigText(bigtext);
         mBuilder = getBuilder(context);
         mManager = getManager(context);
@@ -442,7 +446,6 @@ public class QBNotificationManager {
      * 清理 所有
      *
      * @param context
-     * @param channel
      */
     public static void clearAllNotifification(Context context) {
         mManager = getManager(context);
@@ -458,6 +461,37 @@ public class QBNotificationManager {
     public static void clearNotifificationById(Context context, int channel) {
         mManager = getManager(context);
         mManager.cancel(dealWithId(channel));
+    }
+
+
+    private static int iconId = 0;
+
+    public void setIconId(int iconId)
+    {
+        this.iconId=iconId;
+    }
+    /**
+     * 默认图标
+     * @param context
+     * @return
+     */
+    private static int getPushIconId(Context context) {
+        if(iconId==0)
+        {
+            iconId = context.getApplicationInfo().icon;
+        }
+        if (iconId < 0) {
+            iconId = android.R.drawable.sym_def_app_icon;
+        }
+        return iconId;
+    }
+
+    private  static String getSubStringTitle(String desc) {
+        if (desc != null && !"".equals(desc) && desc.length() > 15) {
+            return desc.substring(0, 15);
+        } else {
+            return desc;
+        }
     }
 }
 

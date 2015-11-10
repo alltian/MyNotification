@@ -55,15 +55,15 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 break;
             case 1:
 
-                int num= 7;
+                int num= 10;
                 String [] lins =new String[num];
                 for (int i=0 ;i<num;i++)
                 {
-                    lins[i]="第"+i+"行数据";
+                    lins[i]="第"+i+"行数据AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
                 }
                 QBNotificationManager.showInboxStyleNotification(this,
                         "InboxStyle标题", "内容", "InboxStyle显示通知", "段落视图", "小标题",lins,
-                        resultIntent, R.drawable.ic_launcher, 2);
+                        resultIntent, R.drawable.ic_launcher);
                 break;
             case 2:
                 QBNotificationManager.showBigPictureStyleNotification(this,
@@ -73,7 +73,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 break;
             case 3:
                 QBNotificationManager.showBigTextStyleNotification(this,
-                        "BigTextStyle标题", "内容", "BigTextStyle显示通知", "文字",
+                        "BigTextStyle标题", "内容", "BigTextStyle显示通知", "文字","sss",
                         "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
                         resultIntent, R.drawable.ic_launcher, 4);
                 break;
